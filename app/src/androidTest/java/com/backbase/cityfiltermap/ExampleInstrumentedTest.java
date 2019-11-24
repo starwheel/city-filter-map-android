@@ -1,4 +1,4 @@
-package com.example.cityfiltermap;
+package com.backbase.cityfiltermap;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.cityfiltermap", appContext.getPackageName());
+        assertEquals("com.backbase.cityfiltermap", appContext.getPackageName());
     }
 }

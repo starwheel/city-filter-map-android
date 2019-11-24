@@ -1,4 +1,4 @@
-package com.example.cityfiltermap;
+package com.backbase.cityfiltermap;
 
 import org.junit.Test;
 
