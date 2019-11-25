@@ -12,22 +12,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
 
     private SearchUseCase searchUseCase;
     private final MutableLiveData<String> searchInput = new MutableLiveData<>();
 
     @Inject
-    public MainViewModel(SearchUseCase searchUseCase) {
+    public SearchViewModel(SearchUseCase searchUseCase) {
         this.searchUseCase = searchUseCase;
+    }
+
+    public MutableLiveData<Boolean> init() {
+        return searchUseCase.init();
     }
 
     public void filterByKey(String key) {
         searchInput.postValue(key);
-    }
-
-    public void init() {
-        searchUseCase.init();
     }
 
     public LiveData<List<SearchEntity>> getSearchLiveData() {

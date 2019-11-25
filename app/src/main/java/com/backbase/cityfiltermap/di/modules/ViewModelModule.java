@@ -3,7 +3,7 @@ package com.backbase.cityfiltermap.di.modules;
 import androidx.lifecycle.ViewModel;
 
 import com.backbase.cityfiltermap.di.ViewModelKey;
-import com.backbase.cityfiltermap.ui.search.MainViewModel;
+import com.backbase.cityfiltermap.ui.search.SearchViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -14,7 +14,7 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainViewModel.class)
-    abstract ViewModel bindMainViewModel(MainViewModel model);
+    @ViewModelKey(SearchViewModel.class)
+    abstract ViewModel bindSearchViewModel(SearchViewModel model);
 
 }

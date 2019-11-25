@@ -19,7 +19,7 @@ import com.backbase.cityfiltermap.R;
 import com.backbase.cityfiltermap.di.ViewModelFactory;
 import com.backbase.cityfiltermap.ui.adapters.SearchListAdapter;
 import com.backbase.cityfiltermap.ui.models.SearchEntity;
-import com.backbase.cityfiltermap.ui.search.MainViewModel;
+import com.backbase.cityfiltermap.ui.search.SearchViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
-    private MainViewModel model;
+    private SearchViewModel model;
 
     @Inject
     ViewModelFactory factory;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        model = ViewModelProviders.of(this,factory).get(MainViewModel.class);
+        model = ViewModelProviders.of(this,factory).get(SearchViewModel.class);
 
         model.getSearchLiveData().observe(this, new Observer<List<SearchEntity>>() {
             @Override
@@ -100,7 +100,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        model.init();
+        model.init().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean initiated) {
+                if (initiated != null) {
+                    editText.setEnabled(initiated);
+                } else {
+                    editText.setEnabled(false);
+                }
+            }
+        });
+
     }
 
     /**
