@@ -16,7 +16,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.backbase.cityfiltermap.ui.MainActivity"
+            android:name="com.backbase.cityfiltermap.ui.search.MainActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

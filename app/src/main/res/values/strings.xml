@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CityFilterMap</string>
     <string name="title_activity_main">CityFilterMap</string>
+    <string name="searching_hint">Filter</string>
 </resources>

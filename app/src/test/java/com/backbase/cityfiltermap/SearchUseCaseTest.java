@@ -61,12 +61,13 @@ public class SearchUseCaseTest {
     @Test
     public void searchSuccess() throws InterruptedException {
         assertEquals(1, LiveDataTestUtil.getValue(useCase.getSearchLiveData("s")).size());
+        assertEquals("Sydney", LiveDataTestUtil.getValue(useCase.getSearchLiveData("s")).get(0).getName());
+        assertEquals(4, LiveDataTestUtil.getValue(useCase.getSearchLiveData("a")).size());
     }
 
     @Test
     public void searchFail() throws InterruptedException {
-        assertEquals(4, LiveDataTestUtil.getValue(useCase.getSearchLiveData("a")).size());
-    }
+        assertEquals(0, LiveDataTestUtil.getValue(useCase.getSearchLiveData("b")).size());    }
 
     @Test
     public void searchEmptyReturnsNothing() throws InterruptedException {

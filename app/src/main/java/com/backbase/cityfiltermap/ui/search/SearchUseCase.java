@@ -16,6 +16,7 @@ public class SearchUseCase {
     private final Executor executorService;
     private final CityStorage cityStorage;
     private MutableLiveData<List<SearchEntity>> _searchLiveData;
+    private final MutableLiveData<Boolean> initLiveData = new MutableLiveData<>();
 
     @Inject
     public SearchUseCase(Executor executorService, CityStorage cityStorage) {
@@ -50,8 +51,7 @@ public class SearchUseCase {
         return _searchLiveData;
     }
 
-    public MutableLiveData<Boolean> init() {
-        final MutableLiveData<Boolean> initLiveData = new MutableLiveData<>();
+    public void init() {
         initLiveData.setValue(false);
         executorService.execute(new Runnable() {
             @Override
@@ -60,6 +60,9 @@ public class SearchUseCase {
                 initLiveData.postValue(true);
             }
         });
+    }
+
+    public MutableLiveData<Boolean> getInitLiveData() {
         return initLiveData;
     }
 }
