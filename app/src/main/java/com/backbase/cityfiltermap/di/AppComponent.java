@@ -3,6 +3,7 @@ package com.backbase.cityfiltermap.di;
 import android.content.Context;
 
 import com.backbase.cityfiltermap.di.modules.IOModule;
+import com.backbase.cityfiltermap.di.modules.StorageModule;
 import com.backbase.cityfiltermap.di.modules.ViewModelModule;
 import com.backbase.cityfiltermap.ui.di.SearchComponent;
 
@@ -14,6 +15,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         IOModule.class,
+        StorageModule.class,
         ViewModelModule.class,
 })
 public interface AppComponent {
