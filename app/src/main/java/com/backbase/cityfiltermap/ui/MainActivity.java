@@ -6,13 +6,18 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.backbase.cityfiltermap.MyApplication;
 import com.backbase.cityfiltermap.R;
 import com.backbase.cityfiltermap.di.ViewModelFactory;
+import com.backbase.cityfiltermap.ui.adapters.SearchListAdapter;
 import com.backbase.cityfiltermap.ui.models.SearchEntity;
 import com.backbase.cityfiltermap.ui.search.MainViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Inject
     ViewModelFactory factory;
     private EditText editText;
+    private RecyclerView rvList;
+    private SearchListAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.editText);
+        rvList = findViewById(R.id.rvList);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -54,8 +62,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onChanged(List<SearchEntity> searchEntities) {
                 Log.d(TAG, "onChanged: " + searchEntities.size());
+                listAdapter.submitList(null); // It is faster to first erase the list
+                listAdapter.submitList(searchEntities);
+
             }
         });
+
+        listAdapter = new SearchListAdapter(new DiffUtil.ItemCallback<SearchEntity>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull SearchEntity oldItem, @NonNull SearchEntity newItem) {
+                return oldItem.get_id().equals(newItem.get_id());
+            }
+
+            @Override
+            public boolean areContentsTheSame(@NonNull SearchEntity oldItem, @NonNull SearchEntity newItem) {
+                return oldItem.equals(newItem);
+            }
+        });
+
+        rvList.setAdapter(listAdapter);
+        rvList.setLayoutManager(new LinearLayoutManager(this));
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        model.init();
     }
 
     /**
