@@ -18,8 +18,10 @@ import com.backbase.cityfiltermap.MyApplication;
 import com.backbase.cityfiltermap.R;
 import com.backbase.cityfiltermap.di.ViewModelFactory;
 import com.backbase.cityfiltermap.ui.adapters.SearchListAdapter;
+import com.backbase.cityfiltermap.ui.adapters.SearchListCallback;
 import com.backbase.cityfiltermap.ui.models.SearchEntity;
 import com.backbase.cityfiltermap.ui.search.SearchViewModel;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,7 +33,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, SearchListCallback {
 
     private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
@@ -64,11 +66,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.d(TAG, "onChanged: " + searchEntities.size());
                 listAdapter.submitList(null); // It is faster to first erase the list
                 listAdapter.submitList(searchEntities);
-
             }
         });
 
-        listAdapter = new SearchListAdapter(new DiffUtil.ItemCallback<SearchEntity>() {
+        listAdapter = new SearchListAdapter(this, new DiffUtil.ItemCallback<SearchEntity>() {
             @Override
             public boolean areItemsTheSame(@NonNull SearchEntity oldItem, @NonNull SearchEntity newItem) {
                 return oldItem.get_id().equals(newItem.get_id());
@@ -130,5 +131,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    @Override
+    public void onSearchEntityClicked(SearchEntity searchEntity) {
+        if (searchEntity.getCoord() != null) {
+            LatLng coordinate = new LatLng(searchEntity.getCoord().getLat(),
+                    searchEntity.getCoord().getLon());
+            CameraUpdate location = CameraUpdateFactory.newLatLngZoom(
+                    coordinate, 15);
+
+            if (mMap != null) {
+                mMap.animateCamera(location);
+            }
+        }
     }
 }

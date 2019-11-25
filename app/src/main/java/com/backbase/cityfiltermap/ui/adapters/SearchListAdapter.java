@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.AsyncDifferConfig;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,13 +17,11 @@ import com.backbase.cityfiltermap.ui.models.SearchEntity;
 
 public class SearchListAdapter extends ListAdapter<SearchEntity, SearchListAdapter.ViewHolder> {
 
+    private SearchListCallback callback;
 
-    public SearchListAdapter(@NonNull AsyncDifferConfig<SearchEntity> config) {
-        super(config);
-    }
-
-    public SearchListAdapter(@NonNull DiffUtil.ItemCallback<SearchEntity> diffCallback) {
+    public SearchListAdapter(SearchListCallback callback, @NonNull DiffUtil.ItemCallback<SearchEntity> diffCallback) {
         super(diffCallback);
+        this.callback = callback;
     }
 
     @NonNull
@@ -35,10 +33,17 @@ public class SearchListAdapter extends ListAdapter<SearchEntity, SearchListAdapt
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SearchEntity entity = getItem(position);
+        final SearchEntity entity = getItem(position);
 
         holder.tvCity.setText(entity.getName() + ", " + entity.getCountry());
         holder.tvCoords.setText(entity.getCoord().getLat() + " " + entity.getCoord().getLon());
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onSearchEntityClicked(entity);
+            }
+        });
     }
 
 
@@ -46,9 +51,11 @@ public class SearchListAdapter extends ListAdapter<SearchEntity, SearchListAdapt
 
         TextView tvCity;
         TextView tvCoords;
+        ConstraintLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            container = itemView.findViewById(R.id.container);
             tvCity = itemView.findViewById(R.id.tvCity);
             tvCoords = itemView.findViewById(R.id.tvCoords);
         }
