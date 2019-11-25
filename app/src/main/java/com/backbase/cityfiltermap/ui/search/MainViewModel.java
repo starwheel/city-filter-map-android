@@ -26,6 +26,10 @@ public class MainViewModel extends ViewModel {
         searchInput.postValue(key);
     }
 
+    public void init() {
+        searchUseCase.init();
+    }
+
     public LiveData<List<SearchEntity>> getSearchLiveData() {
         return Transformations.switchMap(searchInput, new Function<String, LiveData<List<SearchEntity>>>() {
             @Override
