@@ -1,10 +1,12 @@
 package com.backbase.cityfiltermap.ui.search;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,7 +65,7 @@ public class MapFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mapView = view.findViewById(R.id.mapView);
-
+        ImageView ivBack = view.findViewById(R.id.ivBack);
         if (getArguments() != null) {
             placeLocation = getArguments().getParcelable(KEY_LOCATION);
         }
@@ -87,6 +89,23 @@ public class MapFragment extends Fragment {
             public void onChanged(LatLng latLng) {
                 placeLocation = latLng;
                 moveCameraTo(latLng);
+            }
+        });
+
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            ivBack.setVisibility(View.VISIBLE);
+        } else {
+            ivBack.setVisibility(View.GONE);
+        }
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getActivity() != null) {
+                    getActivity().onBackPressed();
+                }
             }
         });
     }
