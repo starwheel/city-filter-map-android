@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,6 +74,7 @@ public class CityListFragment extends Fragment implements SearchListCallback {
 
         editText = view.findViewById(R.id.editText);
         rvList = view.findViewById(R.id.rvList);
+        final ProgressBar progressBar = view.findViewById(R.id.progressBar);
         model = ViewModelProviders.of(getActivity(), factory).get(SearchViewModel.class);
         model.getSearchLiveData().observe(this, new Observer<List<SearchEntity>>() {
             @Override
@@ -117,6 +119,11 @@ public class CityListFragment extends Fragment implements SearchListCallback {
             @Override
             public void onChanged(Boolean initiated) {
                 if (initiated != null) {
+                    if (initiated) {
+                        progressBar.setVisibility(View.GONE);
+                    } else {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
                     editText.setEnabled(initiated);
                 } else {
                     editText.setEnabled(false);
