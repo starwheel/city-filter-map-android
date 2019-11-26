@@ -48,6 +48,7 @@
                 android:ems="10"
                 android:hint="@string/searching_hint"
                 android:inputType="text"
+                android:imeOptions="flagNoExtractUi"
                 android:padding="8dp"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
