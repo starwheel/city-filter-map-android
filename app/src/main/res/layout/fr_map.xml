@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-        <ImageButton
+    <ImageButton
         android:id="@+id/ivBack"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:padding="10dp"
         android:layout_gravity="start|top"
+        android:tint="@color/button_color"
         app:srcCompat="@drawable/ic_arrow_back_24dp" />
 
 </FrameLayout>

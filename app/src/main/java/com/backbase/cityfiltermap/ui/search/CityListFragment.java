@@ -14,10 +14,12 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -98,7 +100,9 @@ public class CityListFragment extends Fragment implements SearchListCallback {
 
         rvList.setAdapter(listAdapter);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        decoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.inset_divider));
+        rvList.addItemDecoration(decoration);
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
