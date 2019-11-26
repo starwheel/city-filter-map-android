@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.backbase.cityfiltermap.ui.models.SearchEntity;
+import com.backbase.cityfiltermap.domain.usecase.SearchUseCase;
+import com.backbase.cityfiltermap.domain.model.SearchEntity;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;

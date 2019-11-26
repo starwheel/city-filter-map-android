@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.backbase.cityfiltermap.ui.models.SearchEntity;
+import com.backbase.cityfiltermap.domain.model.SearchEntity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

@@ -6,8 +6,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.backbase.cityfiltermap.data.CityStorage;
 import com.backbase.cityfiltermap.data.LocalCityStorage;
-import com.backbase.cityfiltermap.ui.models.SearchEntity;
-import com.backbase.cityfiltermap.ui.search.SearchUseCase;
+import com.backbase.cityfiltermap.domain.model.SearchEntity;
+import com.backbase.cityfiltermap.domain.usecase.SearchUseCase;
 
 import org.junit.Before;
 import org.junit.Rule;

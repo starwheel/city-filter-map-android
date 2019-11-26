@@ -1,4 +1,4 @@
-package com.backbase.cityfiltermap.ui.models;
+package com.backbase.cityfiltermap.domain.model;
 
 public class SearchEntity {
 

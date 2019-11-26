@@ -24,7 +24,7 @@ import com.backbase.cityfiltermap.R;
 import com.backbase.cityfiltermap.di.ViewModelFactory;
 import com.backbase.cityfiltermap.ui.adapters.SearchListAdapter;
 import com.backbase.cityfiltermap.ui.adapters.SearchListCallback;
-import com.backbase.cityfiltermap.ui.models.SearchEntity;
+import com.backbase.cityfiltermap.domain.model.SearchEntity;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;

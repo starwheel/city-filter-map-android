@@ -1,6 +1,6 @@
 package com.backbase.cityfiltermap.data;
 
-import com.backbase.cityfiltermap.ui.models.SearchEntity;
+import com.backbase.cityfiltermap.domain.model.SearchEntity;
 
 import java.util.List;
 import java.util.TreeMap;

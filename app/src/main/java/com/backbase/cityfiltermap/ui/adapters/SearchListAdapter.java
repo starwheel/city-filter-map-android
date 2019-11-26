@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.backbase.cityfiltermap.R;
-import com.backbase.cityfiltermap.ui.models.SearchEntity;
+import com.backbase.cityfiltermap.domain.model.SearchEntity;
 
 public class SearchListAdapter extends ListAdapter<SearchEntity, SearchListAdapter.ViewHolder> {
 

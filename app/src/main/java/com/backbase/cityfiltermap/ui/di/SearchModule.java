@@ -2,7 +2,7 @@ package com.backbase.cityfiltermap.ui.di;
 
 import com.backbase.cityfiltermap.data.CityStorage;
 import com.backbase.cityfiltermap.di.annotations.ActivityScope;
-import com.backbase.cityfiltermap.ui.search.SearchUseCase;
+import com.backbase.cityfiltermap.domain.usecase.SearchUseCase;
 
 import java.util.concurrent.Executor;
 

@@ -1,9 +1,9 @@
-package com.backbase.cityfiltermap.ui.search;
+package com.backbase.cityfiltermap.domain.usecase;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.backbase.cityfiltermap.data.CityStorage;
-import com.backbase.cityfiltermap.ui.models.SearchEntity;
+import com.backbase.cityfiltermap.domain.model.SearchEntity;
 
 import java.util.ArrayList;
 import java.util.List;
