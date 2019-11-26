@@ -21,22 +21,26 @@ There is a list of cities containing around 200k entries in JSON format. Each en
 |      :---:    |     :---:    |     :---:    |
 | <img width="90%" vspace="10" src="https://github.com/starwheel/city-filter-map-android/raw/master/mockups/portrait_list.jpg">  | <img width="90%" vspace="10" src="https://github.com/starwheel/city-filter-map-android/raw/master/mockups/portrait_map.jpg">  | <img width="90%" vspace="10" src="https://github.com/starwheel/city-filter-map-android/raw/master/mockups/landscape_master_detail.jpg">  |
 
+## Architecture 
+
+This project uses principles of Clean Architecture, implements the Model–view–viewmodel (MVVM) software architectural pattern and dependency injections with the Dagger framework for Android. 
+
 ## Requirements
 
 - Compatible with Android 4.1+
 - A Google Maps API key.
 
 ## Build the Project
-
 **Note:** First you will need to set your Google Maps API key in google_maps_key.xml.
 
-    # Build the app
+This project uses the Gradle build system. To build this project, use the following commands: 
+
+    # Build the project
     $ ./gradlew build
+    $ or use "Import Project" in Android Studio.
+
+    # Run the project
+    $ Open the project with Android Studio, let it build the project and hit Run
 
     # Run the tests
     $ ./gradlew test
-
-    # Run the app
-    $ Open the project with Android Studio, let it build the project and hit Run
-
-
