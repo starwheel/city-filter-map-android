@@ -72,11 +72,21 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
         } else {
             transaction
-                .replace(R.id.fragment_container, mapFragment)
-                .addToBackStack("map")
+                .add(R.id.fragment_container, mapFragment)
+                .addToBackStack("map_details")
                 .commit();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && mapContainer != null) {
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void moveTo(LatLng coordinate) {
