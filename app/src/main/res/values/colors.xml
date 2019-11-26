@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#D3D3D3</color>
-    <color name="colorPrimaryDark">#A9A9A9</color>
+    <color name="colorPrimaryDark">#E0E0E0</color>
     <color name="colorAccent">#778899</color>
 
     <color name="listBackground">#fafafa</color>
-    <color name="listSelectedItemBackground">@color/colorPrimaryDark</color>
+    <color name="listSelectedItemBackground">#D8D8D8</color>
     <color name="buttonTintColor">#404040</color>
 </resources>
