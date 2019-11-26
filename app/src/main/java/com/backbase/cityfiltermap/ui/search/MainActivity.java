@@ -1,8 +1,12 @@
 package com.backbase.cityfiltermap.ui.search;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.backbase.cityfiltermap.MyApplication;
@@ -18,42 +22,68 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     ViewModelFactory factory;
     SearchComponent searchComponent;
+    private FrameLayout mapContainer;
+    private SearchViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        ((MyApplication) getApplication()).appComponent.searchComponent().create().inject(this);
-        searchComponent = ((MyApplication) getApplicationContext())
-                .appComponent.searchComponent().create();
+        searchComponent =
+                ((MyApplication) getApplicationContext()).appComponent.searchComponent().create();
         searchComponent.inject(this);
 
-        setContentView(R.layout.activity_main);
-        SearchViewModel model = ViewModelProviders.of(this, factory).get(SearchViewModel.class);
-        model.init();
+        super.onCreate(savedInstanceState);
 
-        attachCityList();
+        setContentView(R.layout.activity_main);
+        model = ViewModelProviders.of(this, factory).get(SearchViewModel.class);
+        model.init();
+        mapContainer = findViewById(R.id.map_container);
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && mapContainer != null) {
+            attachListFragment();
+            attachMapFragment(true);
+        } else {
+            attachListFragment();
+        }
     }
 
-    private void attachCityList() {
-        CityListFragment fr = CityListFragment.newInstance();
+    private void attachListFragment() {
+        Fragment fr = getSupportFragmentManager().findFragmentByTag("city_list");
+
+        if (fr == null) {
+            fr = CityListFragment.newInstance();
+        }
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, fr)
+                .replace(R.id.fragment_container, fr, "city_list")
                 .commit();
     }
 
-    private void attachMapFragment(LatLng latLng) {
-        MapFragment mapFragment = MapFragment.newInstance(latLng);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, mapFragment)
+    private void attachMapFragment(Boolean dualPane) {
+        MapFragment mapFragment = MapFragment.newInstance(null);
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+
+        if (dualPane) {
+            transaction
+                .replace(R.id.map_container, mapFragment)
+                .commit();
+        } else {
+            transaction
+                .replace(R.id.fragment_container, mapFragment)
                 .addToBackStack("map")
                 .commit();
+        }
+
     }
 
     public void moveTo(LatLng coordinate) {
-        attachMapFragment(coordinate);
+        int orientation = getResources().getConfiguration().orientation;
+        model.moveToEntityDetails(coordinate);
+        if (orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            attachMapFragment(false);
+        }
     }
 }

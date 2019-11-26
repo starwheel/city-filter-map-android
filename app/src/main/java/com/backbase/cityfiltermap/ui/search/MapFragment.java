@@ -32,13 +32,13 @@ public class MapFragment extends Fragment {
     ViewModelFactory factory;
     private MapView mapView;
     private GoogleMap mMap;
+    private LatLng placeLocation;
 
     public MapFragment() {
 
     }
 
     public static MapFragment newInstance(LatLng latLng) {
-
         Bundle args = new Bundle();
         args.putParcelable(KEY_LOCATION, latLng);
         MapFragment fragment = new MapFragment();
@@ -48,8 +48,9 @@ public class MapFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
+        ((MainActivity)context).searchComponent.inject(this);
+
         super.onAttach(context);
-        ((MainActivity) context).searchComponent.inject(this);
     }
 
     @Nullable
@@ -63,19 +64,28 @@ public class MapFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mapView = view.findViewById(R.id.mapView);
 
+        if (getArguments() != null) {
+            placeLocation = getArguments().getParcelable(KEY_LOCATION);
+        }
+
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
+
+                if (placeLocation != null) {
+                    moveCameraTo(placeLocation);
+                }
             }
         });
 
         mapView.onCreate(savedInstanceState);
 
-        SearchViewModel model = ViewModelProviders.of(this, factory).get(SearchViewModel.class);
+        SearchViewModel model = ViewModelProviders.of(getActivity(), factory).get(SearchViewModel.class);
         model.getCoordinatesLiveData().observe(this, new Observer<LatLng>() {
             @Override
             public void onChanged(LatLng latLng) {
+                placeLocation = latLng;
                 moveCameraTo(latLng);
             }
         });
@@ -84,43 +94,58 @@ public class MapFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mapView.onStart();
+        if (mapView != null) {
+            mapView.onStart();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mapView.onStop();
+        if (mapView != null) {
+            mapView.onStop();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mapView.onResume();
+        if (mapView != null) {
+            mapView.onResume();
+        }
     }
 
     @Override
     public void onPause() {
+        if (mapView != null) {
+            mapView.onPause();
+        }
         super.onPause();
-        mapView.onPause();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+        if (mapView != null) {
+            mapView.onLowMemory();
+        }
     }
 
     @Override
     public void onDestroy() {
+        // Always check if mapView is not null, onDestroy() might be called before onViewCreated().
+        // Alternatively cleanup mapView in the onDestroyView() instead of onDestroy().
+        if (mapView != null) {
+            mapView.onDestroy();
+        }
         super.onDestroy();
-        mapView.onDestroy();
     }
 
     public void moveCameraTo(LatLng coordinate) {
         CameraUpdate location = CameraUpdateFactory.newLatLngZoom(coordinate, 15);
 
         if (mMap != null) {
+            mMap.clear();
             mMap.animateCamera(location);
             mMap.addMarker(new MarkerOptions().position(coordinate).title(""));
         }

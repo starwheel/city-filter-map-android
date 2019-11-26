@@ -55,8 +55,9 @@ public class CityListFragment extends Fragment implements SearchListCallback {
 
     @Override
     public void onAttach(@NonNull Context context) {
+        ((MainActivity)context).searchComponent.inject(this);
+
         super.onAttach(context);
-        ((MainActivity) context).searchComponent.inject(this);
     }
 
     @Nullable
