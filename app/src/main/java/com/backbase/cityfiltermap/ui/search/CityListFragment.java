@@ -134,6 +134,13 @@ public class CityListFragment extends Fragment implements SearchListCallback {
                 }
             }
         });
+
+        model.getCoordinatesLiveData().observe(this, new Observer<LatLng>() {
+            @Override
+            public void onChanged(LatLng latLng) {
+                listAdapter.setSelectedCity(latLng);
+            }
+        });
     }
 
     @Override
@@ -141,7 +148,6 @@ public class CityListFragment extends Fragment implements SearchListCallback {
         if (searchEntity.getCoord() != null) {
             LatLng coordinate = new LatLng(searchEntity.getCoord().getLat(),
                     searchEntity.getCoord().getLon());
-            model.moveToEntityDetails(coordinate);
             if (getActivity() != null) {
                 ((MainActivity) getActivity()).moveTo(coordinate);
             }
