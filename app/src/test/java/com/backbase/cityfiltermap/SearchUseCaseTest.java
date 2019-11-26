@@ -67,7 +67,8 @@ public class SearchUseCaseTest {
 
     @Test
     public void searchFail() throws InterruptedException {
-        assertEquals(0, LiveDataTestUtil.getValue(useCase.getSearchLiveData("b")).size());    }
+        assertEquals(0, LiveDataTestUtil.getValue(useCase.getSearchLiveData("b")).size());
+    }
 
     @Test
     public void searchEmptyReturnsNothing() throws InterruptedException {

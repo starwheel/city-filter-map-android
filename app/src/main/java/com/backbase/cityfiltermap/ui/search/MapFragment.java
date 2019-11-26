@@ -50,7 +50,7 @@ public class MapFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        ((MainActivity)context).searchComponent.inject(this);
+        ((MainActivity) context).searchComponent.inject(this);
 
         super.onAttach(context);
     }

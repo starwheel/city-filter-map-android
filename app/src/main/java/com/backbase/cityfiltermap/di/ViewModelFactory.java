@@ -31,7 +31,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             }
         }
         if (creator == null) {
-            throw new IllegalArgumentException("unknown model class " + modelClass);
+            throw new IllegalArgumentException("Unknown model class " + modelClass);
         }
         try {
             return (T) creator.get();
